@@ -13,10 +13,6 @@ data "aws_ec2_managed_prefix_list" "shared_services_management" {
   name = "shared-services-management-cidrs"
 }
 
-data "aws_iam_user" "concourse" {
-  user_name = "concourse-platform"
-}
-
 data "aws_subnet" "application" {
   count = length(data.aws_subnets.application.ids)
   id    = tolist(data.aws_subnets.application.ids)[count.index]
