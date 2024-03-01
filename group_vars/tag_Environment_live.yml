@@ -51,7 +51,7 @@ informix_db_config:
           host: instance-2.dps.live.heritage.aws.internal
           service_or_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
 
-iscsi_devices:
+iscsi_devices_config:
   - alias: db_dump
     filesystem:
       type: xfs
