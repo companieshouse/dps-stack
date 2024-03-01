@@ -6,7 +6,7 @@ regions:
 
 filters:
   tag:Environment: live
-  tag:ServiceSubType: dps
+  tag:Service: dps
 
 keyed_groups:
   - key: tags
