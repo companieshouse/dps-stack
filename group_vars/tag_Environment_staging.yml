@@ -1,0 +1,60 @@
+---
+
+# Staging environment
+#
+# Server port mappings:
+#   - dps 6000 (primary/secondary)
+#
+# Server ID mappings:
+#   - dps 0 (primary/secondary)
+
+informix_server_id_increment: 1
+informix_server_id_start: 0
+informix_server_port_increment: 1000
+informix_server_port_start: 6000
+
+cloudwatch_agent_overrides:
+  metrics_enabled: true
+
+informix_db_config:
+  dps:
+    server_id: "{{ informix_server_id_start + (0 * informix_server_id_increment) | int }}"
+    server_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
+    event_alarms_enabled: true
+    dbspaces:
+      root:
+        initial_chunk:
+          path: "/dev/dps"
+          offset_in_kb: 0
+          size_in_kb: 2000000
+      dps_data_dbs:
+        initial_chunk:
+          path: "/dev/dps"
+          offset_in_kb: 2000000
+          size_in_kb: 7500000
+      dps_log_dbs:
+        initial_chunk:
+          path: "/dev/dps"
+          offset_in_kb: 9500000
+          size_in_kb: 500000
+    server_connections:
+        - server_name: dps
+          connection_type: onipcshm
+          host: localhost
+          service_or_port: localhost
+        - server_name: dps_primary
+          connection_type: onsoctcp
+          host: instance-1.dps.staging.heritage.aws.internal
+          service_or_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
+        - server_name: dps_secondary
+          connection_type: onsoctcp
+          host: instance-2.dps.staging.heritage.aws.internal
+          service_or_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
+
+iscsi_devices:
+  - alias: db_dump
+    filesystem:
+      type: xfs
+      mount_path: /db_dump
+  - alias: dps
+    raw_character_device_path: /dev/raw/raw1
