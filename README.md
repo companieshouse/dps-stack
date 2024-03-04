@@ -9,10 +9,8 @@ The remainder of this document contains information that is specific to the bran
 
 ## Deployment
 
-This branch (i.e. `deployment`) contains the deployment code responsible for deploying DPS services and is composed of multiple Ansible roles which are used primarily in CI to provision Informix database servers and deploy groups of DPS services to a given environment.
+This branch (i.e. `deployment`) contains the deployment code responsible for deploying DPS services and contains several Ansible playbooks which are used in CI/CD pipelines to provision servers in AWS:
 
-Refer to the documentation for each of the following roles for more information:
-
-* [database](roles/database/README.md) - for provisioning Informix database server(s), dbspaces, chunks
-* [devices](roles/devices/README.md) - for database storage iSCSI device discovery and configuration
-* [nfs](roles/nfs/README.md) - for configuring and mounting NFS shares
+- [database.yml](database.yml) - provision Informix database server(s), dbspaces, and chunks
+- [devices.yml](devices.yml) - discover and configure iSCSI devices
+- [nfs.yml](nfs.yml) - configure and mount persistent NFS shares
