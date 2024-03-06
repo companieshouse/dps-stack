@@ -3,7 +3,7 @@
 roles:
   - src: https://github.com/companieshouse/ansible-role-aws-cli
     name: aws-cli
-    version: "1.0.0"
+    version: "1.0.1"
   - src: https://github.com/companieshouse/ansible-role-informix-db
     name: informix-db
     version: "1.0.3"
