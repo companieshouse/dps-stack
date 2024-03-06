@@ -1,3 +1,33 @@
 ---
 
 informix_db_server_name_suffix: _primary
+
+informix_management_cron_jobs:
+  - name: Stop all logical log continuous backup processes
+    day_of_week: "*"
+    day_of_month: "*"
+    minute: "05"
+    hour: "06"
+    month: "*"
+    script: "stop_all_logicals"
+  - name: Informix DPS database logical log archive
+    day_of_week: "*"
+    day_of_month: "*"
+    minute: "10"
+    hour: "06"
+    month: "*"
+    script: "logical_log_archive dps"
+  - name: Informix DPS database level zero backup
+    day_of_week: "*"
+    day_of_month: "*"
+    minute: "20"
+    hour: "06"
+    month: "*"
+    script: "level_zero_backup dps"
+  - name: Informix DPS database statistics update
+    day_of_week: "*"
+    day_of_month: "*"
+    minute: "00"
+    hour: "07"
+    month: "*"
+    script: "update_statistics dps"
