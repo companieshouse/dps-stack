@@ -51,3 +51,6 @@ informix_db_config:
           host: instance-2.dps.staging.heritage.aws.internal
           service_or_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
 
+nfs_mounts_config:
+  - path: "/DBshare"
+    src: "192.168.255.19:/DPS_DBshare"
