@@ -50,3 +50,7 @@ informix_db_config:
           connection_type: onsoctcp
           host: instance-2.dps.live.heritage.aws.internal
           service_or_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
+
+nfs_mounts_config:
+  - path: "/DBshare"
+    src: "192.168.255.35:/DPS_DBshare"
