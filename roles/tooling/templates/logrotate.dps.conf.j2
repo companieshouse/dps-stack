@@ -1,0 +1,12 @@
+{{ dps_logs_path }}/*/*.log {{ informix_logs_path }}/*/*.log {{ informix_logs_path }}/*/*.con {
+  daily
+  copytruncate
+  compress
+  maxage 7
+  maxsize 1G
+  missingok
+  notifempty
+  olddir old
+  rotate 20
+  createolddir 0755 root root
+}

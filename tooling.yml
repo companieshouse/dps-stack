@@ -1,0 +1,17 @@
+---
+
+# Provision Ansible controller with SSH key for remote
+- hosts: localhost
+  roles:
+    - role: ssh-key
+      vars:
+        ssh_key_name: ansible_remote
+        hashicorp_vault_private_key_path: "{{ vault_base_path }}/aws"
+
+# Provision tools and system configuration
+- hosts: aws_ec2
+  serial: 1
+  remote_user: centos
+  become: yes
+  roles:
+    - tooling

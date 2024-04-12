@@ -1,0 +1,29 @@
+---
+
+- name: Install additional tools for service maintenance scripts
+  yum:
+    state: present
+    name:
+      - ftp
+      - mailx
+      - cups
+      - colord
+
+- name: Disable mailx inbuilt SMTP relay
+  replace:
+    path: /etc/mail.rc
+    regexp: '^(set smtp=.*)'
+    replace: '#\1'
+
+- name: Configure Postfix mail transfer agent
+  template:
+    src: main.cf.j2
+    dest: "{{ postfix_config_path }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - Restart Postfix service
+
+- name: Flush handlers
+  meta: flush_handlers
