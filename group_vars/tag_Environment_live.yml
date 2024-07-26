@@ -13,6 +13,7 @@ informix_server_id_start: 0
 informix_server_port_increment: 1000
 informix_server_port_start: 6000
 informix_server_port_local: 7000
+informix_server_alias_local: dps_local
 
 cloudwatch_agent_overrides:
   metrics_enabled: true
@@ -21,6 +22,7 @@ informix_db_config:
   dps:
     server_id: "{{ informix_server_id_start + (0 * informix_server_id_increment) | int }}"
     server_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
+    server_aliases: "{{ informix_server_alias_local }}"
     event_alarms_enabled: true
     dbspaces:
       root:
@@ -51,7 +53,7 @@ informix_db_config:
           connection_type: onsoctcp
           host: instance-2.dps.live.heritage.aws.internal
           service_or_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
-        - server_name: dps_local
+        - server_name: "{{ informix_server_alias_local }}"
           connection_type: onsoctcp
           host: localhost4
           service_or_port: "{{ informix_server_port_local }}"
