@@ -41,22 +41,22 @@ informix_db_config:
           offset_in_kb: 9500000
           size_in_kb: 500000
     server_connections:
-        - server_name: dps
-          connection_type: onipcshm
-          host: localhost
-          service_or_port: localhost
-        - server_name: dps_primary
-          connection_type: onsoctcp
-          host: instance-1.dps.staging.heritage.aws.internal
-          service_or_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
-        - server_name: dps_secondary
-          connection_type: onsoctcp
-          host: instance-2.dps.staging.heritage.aws.internal
-          service_or_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
-        - server_name: "{{ informix_server_alias_local }}"
-          connection_type: onsoctcp
-          host: localhost4
-          service_or_port: "{{ informix_server_port_local }}"
+      - server_name: dps
+        connection_type: onipcshm
+        host: localhost
+        service_or_port: localhost
+      - server_name: dps_primary
+        connection_type: onsoctcp
+        host: instance-1.dps.staging.heritage.aws.internal
+        service_or_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
+      - server_name: dps_secondary
+        connection_type: onsoctcp
+        host: instance-2.dps.staging.heritage.aws.internal
+        service_or_port: "{{ informix_server_port_start + (0 * informix_server_port_increment) | int }}"
+      - server_name: "{{ informix_server_alias_local }}"
+        connection_type: onsoctcp
+        host: localhost4
+        service_or_port: "{{ informix_server_port_local }}"
 
 nfs_mounts_config:
   - path: "/DBshare"
