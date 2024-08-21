@@ -1,5 +1,7 @@
 ---
 
+informix_logs_path: /var/log/informix
+
 iscsi_devices_config:
   - alias: db_dump
     filesystem:
@@ -15,5 +17,3 @@ iscsi_devices_config:
       group: informix
 
 vault_base_path: /applications/heritage-{{ environment_name }}-eu-west-2/dps-stack
-
-informix_logs_path: /var/log/informix
