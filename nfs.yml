@@ -16,4 +16,4 @@
   roles:
     - role: companieshouse.general.nfs_mounts
       vars:
-        nfs_mounts_vault_path:  "{{ vault_base_path }}/nfs"
+        nfs_mounts_vault_path: "{{ vault_base_path }}/nfs"
