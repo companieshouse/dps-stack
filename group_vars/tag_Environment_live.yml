@@ -57,7 +57,3 @@ informix_db_config:
         connection_type: onsoctcp
         host: localhost4
         service_or_port: "{{ informix_server_port_local }}"
-
-nfs_mounts_config:
-  - path: "/DBshare"
-    src: "192.168.255.39:/DPS_DBshare"
