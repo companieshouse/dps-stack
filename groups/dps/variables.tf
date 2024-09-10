@@ -1,3 +1,9 @@
+variable "acm_domain_name" {
+  type        = string
+  default     = "*.companieshouse.gov.uk"
+  description = "Domain name for wildcard ACM certificate"
+}
+
 variable "ami_owner_id" {
   type        = string
   description = "The AMI owner ID"

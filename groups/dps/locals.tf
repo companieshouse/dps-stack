@@ -35,4 +35,6 @@ locals {
   instance_profile_kms_key_access_ids = [local.ssm_kms_key_id]
 
   logs_kms_key_id = data.vault_generic_secret.kms_keys.data["logs"]
+
+  qa_app_name = "qa-${local.common_resource_name}"
 }
