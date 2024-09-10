@@ -5,6 +5,10 @@ resource "aws_acm_certificate" "qa_app" {
   tags = merge(local.common_tags, {
     Name = local.qa_app_name
   })
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_acm_certificate_validation" "qa_app" {
