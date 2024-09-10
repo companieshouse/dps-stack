@@ -1,4 +1,3 @@
-
 resource "aws_acm_certificate" "qa_app" {
   domain_name       = local.qa_app_fqdn
   validation_method = "DNS"
