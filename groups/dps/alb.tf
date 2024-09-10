@@ -7,6 +7,12 @@ resource "aws_lb" "qa_app" {
 
   drop_invalid_header_fields = true
 
+  access_logs {
+    bucket  = local.lb_access_logs_bucket_name
+    prefix  = local.lb_access_logs_prefix
+    enabled = true
+  }
+
   tags = merge(local.common_tags, {
     Name = local.qa_app_name
   })

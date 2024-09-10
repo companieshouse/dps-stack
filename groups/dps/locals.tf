@@ -15,6 +15,9 @@ locals {
   security_kms_keys_data = data.vault_generic_secret.security_kms_keys.data
   ssm_kms_key_id         = local.security_kms_keys_data.session-manager-kms-key-arn
 
+  lb_access_logs_bucket_name = local.security_s3_data["elb-access-logs-bucket-name"]
+  lb_access_logs_prefix      = "elb-access-logs"
+
   dps_log_groups = {
     for dps_log in var.dps_log_groups[*].name : "dps-${lower(dps_log)}" => {
       log_retention_in_days = lookup(var.dps_log_groups[index(var.dps_log_groups[*].name, dps_log)], "log_retention_in_days", var.default_log_retention_in_days)
