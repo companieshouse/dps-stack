@@ -27,7 +27,20 @@ resource "aws_security_group" "qa_app" {
   })
 }
 
-resource "aws_security_group_rule" "qa_app" {
+resource "aws_security_group_rule" "qa_app_http" {
+  type        = "ingress"
+  description = "Allow inbound connectivity to QA web application"
+  from_port   = 80
+  to_port     = 80
+  protocol    = "TCP"
+  prefix_list_ids = [
+    data.aws_ec2_managed_prefix_list.vpn.id,
+    data.aws_ec2_managed_prefix_list.on_premise.id
+  ]
+  security_group_id = aws_security_group.qa_app.id
+}
+
+resource "aws_security_group_rule" "qa_app_https" {
   type        = "ingress"
   description = "Allow inbound connectivity to QA web application"
   from_port   = 443
