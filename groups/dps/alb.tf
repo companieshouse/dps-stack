@@ -52,17 +52,6 @@ resource "aws_lb_listener" "qa_app_https" {
   load_balancer_arn = aws_lb.qa_app.arn
   port              = "443"
   protocol          = "HTTPS"
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.qa_app.arn
-  }
-}
-
-resource "aws_lb_listener" "front_end" {
-  load_balancer_arn = aws_lb.qa_app.arn
-  port              = "443"
-  protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
   certificate_arn   = aws_acm_certificate_validation.qa_app.certificate_arn
 
