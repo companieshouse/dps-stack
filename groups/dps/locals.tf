@@ -35,4 +35,8 @@ locals {
   instance_profile_kms_key_access_ids = [local.ssm_kms_key_id]
 
   logs_kms_key_id = data.vault_generic_secret.kms_keys.data["logs"]
+
+  qa_app_name     = "qa-${local.common_resource_name}"
+  qa_app_dns_name = "qa.${var.service}"
+  qa_app_fqdn     = "${local.qa_app_dns_name}.${data.aws_route53_zone.dps.name}"
 }

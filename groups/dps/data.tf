@@ -13,6 +13,14 @@ data "aws_ec2_managed_prefix_list" "shared_services_management" {
   name = "shared-services-management-cidrs"
 }
 
+data "aws_ec2_managed_prefix_list" "on_premise" {
+  name = "on-premise-cidr-ranges"
+}
+
+data "aws_ec2_managed_prefix_list" "vpn" {
+  name = "vpn-cidr-ranges"
+}
+
 data "aws_subnet" "application" {
   count = length(data.aws_subnets.application.ids)
   id    = tolist(data.aws_subnets.application.ids)[count.index]
@@ -73,5 +81,3 @@ data "vault_generic_secret" "security_kms_keys" {
 data "vault_generic_secret" "security_s3_buckets" {
   path = "aws-accounts/security/s3"
 }
-
-
