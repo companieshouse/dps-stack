@@ -5,6 +5,8 @@ resource "aws_lb" "qa_app" {
   security_groups    = [aws_security_group.qa_app.id]
   subnets            = data.aws_subnet.application[*].id
 
+  drop_invalid_header_fields = true
+
   tags = merge(local.common_tags, {
     Name = local.qa_app_name
   })
