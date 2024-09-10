@@ -53,6 +53,16 @@ resource "aws_security_group_rule" "qa_app_https" {
   security_group_id = aws_security_group.qa_app.id
 }
 
+resource "aws_security_group_rule" "lb_egress_all" {
+  type              = "egress"
+  description       = "Allow all outbound traffic"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.qa_app.id
+}
+
 resource "aws_lb_listener" "qa_app_http" {
   load_balancer_arn = aws_lb.qa_app.arn
   port              = "80"
