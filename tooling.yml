@@ -14,4 +14,8 @@
   remote_user: centos
   become: true
   roles:
+    - role: companieshouse.general.systemd_journald
+    - role: companieshouse.general.aws_cli
+      vars:
+        aws_cli_temp_dir: "/home/{{ ansible_user }}"
     - role: tooling
