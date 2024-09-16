@@ -55,6 +55,14 @@
     path: "{{ qa_app_start_script_path }}"
   register: qa_start_script
 
+- name: Set ownership of Tomcat directory structure
+  ansible.builtin.file:
+    path: "/opt/tomcat"
+    state: directory
+    recurse: yes
+    owner: "{{ dps_user }}"
+    group: "{{ dps_group }}"
+
 - name: Start QA web application
   become: true
   become_user: "{{ dps_user }}"
