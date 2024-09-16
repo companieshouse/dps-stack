@@ -97,6 +97,9 @@ dps_group: dps
 dps_log_rotation_config_path: /etc/logrotate.dps.conf
 dps_logs_path: /var/log/dps
 
+dps_printer_enabled: false
+dps_printer_name: dps-printer
+
 postfix_config_path: /etc/postfix/main.cf
 
 postfix_config:
