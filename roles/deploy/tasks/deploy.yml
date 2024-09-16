@@ -1,0 +1,66 @@
+---
+
+- name: Check state of QA web application stop script
+  ansible.builtin.stat:
+    path: "{{ qa_app_stop_script_path }}"
+  register: qa_stop_script
+
+- name: Stop QA web application
+  become: true
+  become_user: "{{ dps_user }}"
+  register: stop_qa_app
+  ansible.builtin.shell: "{{ qa_app_stop_script_path }}"
+  args:
+    executable: /bin/bash
+  when: qa_stop_script.stat.exists
+  changed_when: "'Tomcat may not be running' not in stop_qa_app.stdout and stop_qa_app.rc == 0"
+
+- name: Create bulk directory structure
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner | default(dps_user) }}"
+    group: "{{ item.group | default(dps_group) }}"
+    mode: "{{ item.mode | default('0755') }}"
+    state: directory
+  loop: "{{ bulk_home_directory_structure | selectattr('type', '==', 'dir') | list }}"
+
+- name: Create bulk symolic links
+  ansible.builtin.file:
+    src: "{{ item.src }}"
+    dest: "{{ item.path }}"
+    owner: "{{ item.owner | default(dps_user) }}"
+    group: "{{ item.group | default(dps_group) }}"
+    force: true
+    follow: false
+    state: link
+  loop: "{{ bulk_home_directory_structure | selectattr('type', '==', 'link') | list }}"
+
+- name: Template bulk scripts
+  ansible.builtin.template:
+    src: "{{ item.src | default() }}"
+    dest: "{{ item.path }}"
+    owner: "{{ item.owner | default(dps_user) }}"
+    group: "{{ item.group | default(dps_group) }}"
+    mode: "{{ item.mode | default('0644') }}"
+  loop: "{{ bulk_home_directory_structure | selectattr('type', '==', 'template') | list }}"
+
+- name: Deploy and extract application artefact
+  ansible.builtin.unarchive:
+    src: "{{ application_artifact_path }}"
+    dest: "/"
+    remote_src: false
+
+- name: Check state of QA web application start script
+  ansible.builtin.stat:
+    path: "{{ qa_app_start_script_path }}"
+  register: qa_start_script
+
+- name: Start QA web application
+  become: true
+  become_user: "{{ dps_user }}"
+  register: start_qa_app
+  ansible.builtin.shell: "{{ qa_app_start_script_path }}"
+  args:
+    executable: /bin/bash
+  when: qa_start_script.stat.exists
+  changed_when: "'already running' not in start_qa_app.stdout and start_qa_app.rc == 0"

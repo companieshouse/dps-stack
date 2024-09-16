@@ -1,0 +1,25 @@
+---
+
+- name: Start printer support services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - cups
+    - colord
+
+- name: Stop printer support services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: stopped
+    enabled: false
+  loop:
+    - cups
+    - colord
+
+- name: Restart Postfix service
+  ansible.builtin.systemd:
+    name: postfix
+    state: restarted
+    enabled: true

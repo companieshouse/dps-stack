@@ -1,0 +1,110 @@
+---
+
+bulk_home_directory_structure:
+  - path: /home/bulk/
+    type: dir
+  - path: /home/bulk/tape/
+    type: dir
+  - path: /home/bulk/tape/tape/
+    type: dir
+  - path: /home/bulk/tape/tape/foldingspace/
+    type: dir
+  - path: /home/bulk/tape/tape/foldingspace/foldingTar_move.ksh
+    src: foldingTar_move.ksh.j2
+    mode: '0777'
+    type: template
+  - path: /home/bulk/test/
+    type: dir
+  - path: /home/bulk/image/
+    type: dir
+  - path: /home/bulk/image/newc/
+    type: dir
+  - path: /home/bulk/image/acc/
+    type: dir
+  - path: /home/bulk/image/363/
+    type: dir
+  - path: /home/bulk/image/287/
+    type: dir
+  - path: /home/bulk/image/misc/
+    type: dir
+  - path: /home/bulk/image/liq/
+    type: dir
+  - path: /home/bulk/image/cnm/
+    type: dir
+  - path: /home/bulk/image/288/
+    type: dir
+  - path: /home/bulk/image/cpio-script
+    src: cpio-script.j2
+    type: template
+  - path: /home/bulk/image/cap/
+    type: dir
+  - path: /home/bulk/image/scud/
+    type: dir
+  - path: /home/bulk/image/mort/
+    type: dir
+  - path: /home/bulk/image/customers.prw
+    type: link
+    src: /export/home/new-bulk/image/customers
+  - path: /home/bulk/image/customers
+    type: link
+    src: /home/export/new-bulk/image/customers
+  - path: /home/new-bulk/
+    type: dir
+  - path: /home/new-bulk/image/
+    type: dir
+  - path: /home/new-bulk/image/customers/
+    type: dir
+  - path: /home/new-bulk/image/customers/indexes/
+    type: dir
+  - path: /home/new-bulk/image/customers/cap/
+    type: dir
+  - path: /home/new-bulk/image/customers/scud/
+    type: dir
+  - path: /home/new-bulk/image/customers/288/
+    type: dir
+  - path: /home/new-bulk/image/customers/cnm/
+    type: dir
+  - path: /home/new-bulk/image/customers/liq/
+    type: dir
+  - path: /home/new-bulk/image/customers/mort/
+    type: dir
+  - path: /home/new-bulk/image/customers/287/
+    type: dir
+  - path: /home/new-bulk/image/customers/rec_ext/
+    type: dir
+  - path: /home/new-bulk/image/customers/rec_dates/
+    type: dir
+  - path: /home/new-bulk/image/customers/newc/
+    type: dir
+  - path: /home/new-bulk/image/customers/363/
+    type: dir
+  - path: /home/new-bulk/image/customers/acc/
+    type: dir
+  - path: /home/new-bulk/image/customers/misc/
+    type: dir
+
+cloudwatch_agent_defaults:
+  path: /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl
+  config_dir: /opt/aws/amazon-cloudwatch-agent/etc
+  log_file: /opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log
+  metrics_collection_interval: 60
+  metrics_enabled: false
+  user: cwagent
+
+dps_user: dps
+dps_group: dps
+
+dps_log_rotation_config_path: /etc/logrotate.dps.conf
+dps_logs_path: /var/log/dps
+
+postfix_config_path: /etc/postfix/main.cf
+
+postfix_config:
+  mydomain: companieshouse.gov.uk
+  myorigin: $mydomain
+  relayhost: smtp-outbound.sharedservices.aws.internal
+  inet_interfaces: all
+  inet_protocols: ipv4
+
+qa_app_start_script_path: /apps/scripts/start_qa
+qa_app_stop_script_path: /apps/scripts/stop_qa
