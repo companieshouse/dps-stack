@@ -59,7 +59,7 @@
   ansible.builtin.file:
     path: "/opt/tomcat"
     state: directory
-    recurse: yes
+    recurse: true
     owner: "{{ dps_user }}"
     group: "{{ dps_group }}"
 

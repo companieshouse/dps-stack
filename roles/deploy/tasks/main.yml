@@ -74,5 +74,3 @@
     cmd: "{{ cloudwatch_agent.path }} -a append-config -m ec2 -s -c file:{{ item.path }}"
   loop: "{{ cloudwatch_configs.files }}"
   changed_when: true
-
-
