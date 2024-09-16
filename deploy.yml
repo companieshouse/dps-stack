@@ -1,0 +1,21 @@
+---
+
+- name: Provision Ansible controller with SSH key for remote
+  hosts: localhost
+  roles:
+    - role: companieshouse.general.ssh_key
+      vars:
+        ssh_key_name: ansible_remote
+        ssh_key_vault_path: "{{ vault_base_path }}/aws"
+
+- name: Deploy DPS services
+  hosts: aws_ec2
+  serial: 1
+  remote_user: centos
+  become: true
+  roles:
+    - role: companieshouse.general.systemd_journald
+    - role: companieshouse.general.aws_cli
+      vars:
+        aws_cli_temp_dir: "/home/{{ ansible_user }}"
+    - role: deploy
