@@ -9,7 +9,7 @@
   become: true
   become_user: "{{ dps_user }}"
   register: stop_qa_app
-  ansible.builtin.shell: "{{ qa_app_stop_script_path }}"
+  ansible.builtin.shell: "source /export/home/dps/profile.dps && {{ qa_app_stop_script_path }}"
   args:
     executable: /bin/bash
   when: qa_stop_script.stat.exists
@@ -67,7 +67,7 @@
   become: true
   become_user: "{{ dps_user }}"
   register: start_qa_app
-  ansible.builtin.shell: "{{ qa_app_start_script_path }}"
+  ansible.builtin.shell: "source /export/home/dps/profile.dps && {{ qa_app_start_script_path }}"
   args:
     executable: /bin/bash
   when: qa_start_script.stat.exists
