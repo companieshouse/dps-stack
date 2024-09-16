@@ -3,14 +3,11 @@
 - name: Set EC2 metadata facts
   amazon.aws.ec2_metadata_facts:
 
-- name: Set host facts for passwd database
-  ansible.builtin.getent:
-    database: passwd
-
 - name: Check required variables are set
   ansible.builtin.assert:
     that:
       - environment_name is defined and environment_name | trim | length > 0
+      - application_artifact_path is defined and application_artifact_path | trim | length > 0
     msg: "Required variable(s) empty or undefined"
 
 - name: Set CloudWatch agent facts for config population
@@ -33,7 +30,7 @@
     cmd: "{{ cloudwatch_agent.path }} -a fetch-config -m ec2 -s -c file:{{ cloudwatch_agent.config_dir }}/cloudwatch-config.json"
   changed_when: true
 
-- name: Create shared log rotation configuration for Tuxedo services
+- name: Create shared log rotation configuration for DPS services
   ansible.builtin.template:
     src: templates/logrotate.dps.conf.j2
     dest: "{{ dps_log_rotation_config_path }}"
@@ -62,6 +59,9 @@
   ansible.builtin.lineinfile:
     path: /etc/hosts
     line: "127.0.0.1   {{ ansible_facts.hostname }}"
+
+- name: Deploy DPS services
+  ansible.builtin.include_tasks: deploy.yml
 
 - name: Find application-specific CloudWatch configuration files
   ansible.builtin.find:

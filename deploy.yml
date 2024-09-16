@@ -8,7 +8,7 @@
         ssh_key_name: ansible_remote
         ssh_key_vault_path: "{{ vault_base_path }}/aws"
 
-- name: Provision tools and system configuration
+- name: Deploy DPS services
   hosts: aws_ec2
   serial: 1
   remote_user: centos
@@ -18,4 +18,4 @@
     - role: companieshouse.general.aws_cli
       vars:
         aws_cli_temp_dir: "/home/{{ ansible_user }}"
-    - role: tooling
+    - role: deploy

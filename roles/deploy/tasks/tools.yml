@@ -1,0 +1,63 @@
+---
+
+- name: Install additional tools for service maintenance scripts # noqa fqcn[action-core]
+  ansible.builtin.yum:
+    state: present
+    name:
+      - ftp
+      - mailx
+
+- name: Install printing support tools # noqa fqcn[action-core]
+  ansible.builtin.yum:
+    state: present
+    name:
+      - cups
+      - cups-pdf
+      - colord
+  notify:
+    - Start printer support services
+
+- name: Check printer configuration exists # noqa ignore-errors
+  ansible.builtin.command: "lpstat -p {{ dps_printer_name }}"
+  register: dps_printer_exists
+  ignore_errors: true
+  changed_when: false
+
+- name: Add DPS printer configuration
+  ansible.builtin.command: "lpadmin -p {{ dps_printer_name }} -E -v {{ dps_printer_uri }} -m {{ dps_printer_model }}"
+  when: dps_printer_enabled and dps_printer_exists is failed
+  changed_when: true
+
+- name: Set output path for SMS printer PDF files
+  ansible.builtin.lineinfile:
+    path: /etc/cups/cups-pdf.conf
+    regexp: '^Out '
+    line: "Out {{ dps_printer_pdf_output_dir }}"
+  when: dps_printer_enabled
+
+- name: Remove DPS printer configuration
+  ansible.builtin.command: "lpadmin -x {{ dps_printer_name }}"
+  notify:
+    - Stop printer support services
+  register: dps_printer_deleted
+  when: not dps_printer_enabled and dps_printer_exists is succeeded
+  changed_when: dps_printer_deleted.rc == 0
+
+- name: Disable mailx inbuilt SMTP relay
+  ansible.builtin.replace:
+    path: /etc/mail.rc
+    regexp: '^(set smtp=.*)'
+    replace: '#\1'
+
+- name: Configure Postfix mail transfer agent
+  ansible.builtin.template:
+    src: main.cf.j2
+    dest: "{{ postfix_config_path }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Restart Postfix service
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers

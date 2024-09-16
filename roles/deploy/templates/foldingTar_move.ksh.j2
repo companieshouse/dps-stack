@@ -1,0 +1,34 @@
+#!/bin/bash
+
+DPS_DIR=/image/fstmp
+SOURCE_DIR_ON_SHARE=/export/home/bulk/tape/tape/foldingspace/
+
+cd $SOURCE_DIR_ON_SHARE
+LATEST_FILE_ON_SHARE=`ls -tr fs*.tar|tail -1`
+
+if [ -z $LATEST_FILE_ON_SHARE ]
+then
+    echo "No files with pattern fs*.tar, exiting"
+    exit 0
+else
+    echo "Latest filename on share is $LATEST_FILE_ON_SHARE"
+fi
+
+cd $DPS_DIR
+tar -xvf $SOURCE_DIR_ON_SHARE$LATEST_FILE_ON_SHARE
+    if [ $? -eq 0 ]
+then
+    echo "File successfully untarred"
+else
+    echo "Untar of file failed, exiting"
+    exit 1
+fi
+
+mv $SOURCE_DIR_ON_SHARE$LATEST_FILE_ON_SHARE $SOURCE_DIR_ON_SHARE$LATEST_FILE_ON_SHARE.processed
+if [ $? -eq 0 ]
+then
+    echo "File successfully renamed"
+else
+    echo "Failed to rename file on share, exiting"
+    exit 1
+fi
