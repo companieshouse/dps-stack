@@ -71,4 +71,8 @@
   args:
     executable: /bin/bash
   when: qa_start_script.stat.exists
-  changed_when: "'already running' not in start_qa_app.stdout and start_qa_app.rc == 0"
+  changed_when:
+    - "'already running' not in start_qa_app.stdout"
+    - "'Permission denied' not in start_qa_app.stdout"
+    - "'No such file or directory' not in start_qa_app.stdout"
+    - start_qa_app.rc == 0"
