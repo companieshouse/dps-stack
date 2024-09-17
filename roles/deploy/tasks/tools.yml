@@ -28,7 +28,7 @@
   when: dps_printer_enabled and dps_printer_exists is failed
   changed_when: true
 
-- name: Set output path for SMS printer PDF files
+- name: Set output path for DPS printer PDF files
   ansible.builtin.lineinfile:
     path: /etc/cups/cups-pdf.conf
     regexp: '^Out '
