@@ -97,8 +97,11 @@ dps_group: dps
 dps_log_rotation_config_path: /etc/logrotate.dps.conf
 dps_logs_path: /var/log/dps
 
-dps_printer_enabled: false
+dps_printer_enabled: true
 dps_printer_name: dps-printer
+dps_printer_uri: cups-pdf:/
+dps_printer_model: CUPS-PDF.ppd
+dps_printer_pdf_output_dir: /var/spool/cups-pdf/${USER}
 
 postfix_config_path: /etc/postfix/main.cf
 
