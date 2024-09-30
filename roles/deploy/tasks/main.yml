@@ -13,7 +13,7 @@
 - name: Add DPS aliases and functions to environment for user logins
   ansible.builtin.blockinfile:
     marker: "# {mark} ANSIBLE MANAGED SOURCE BLOCK"
-    path: "/home/{{ tuxedo_service }}/.bash_profile"
+    path: "/home/{{ dps_user }}/.bash_profile"
     block: |
       # Add DPS aliases and functions to environment
       if [[ -f "${HOME}/.profile" ]]; then
