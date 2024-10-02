@@ -10,16 +10,6 @@
       - application_artifact_path is defined and application_artifact_path | trim | length > 0
     msg: "Required variable(s) empty or undefined"
 
-- name: Add DPS aliases and functions to environment for user logins
-  ansible.builtin.blockinfile:
-    marker: "# {mark} ANSIBLE MANAGED SOURCE BLOCK"
-    path: "/home/{{ dps_user }}/.bash_profile"
-    block: |
-      # Add DPS aliases and functions to environment
-      if [[ -f "${HOME}/.profile" ]]; then
-          source "${HOME}/.profile"
-      fi
-
 - name: Set CloudWatch agent facts for config population
   ansible.builtin.set_fact:
     cloudwatch_agent: "{{ cloudwatch_agent_defaults | combine(cloudwatch_agent_overrides | default({})) }}"
