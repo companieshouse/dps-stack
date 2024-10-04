@@ -10,6 +10,24 @@
       - application_artifact_path is defined and application_artifact_path | trim | length > 0
     msg: "Required variable(s) empty or undefined"
 
+- name: Retrieve URA key from Hashicorp Vault
+  ansible.builtin.set_fact:
+    ura_config: "{{ lookup('community.hashi_vault.hashi_vault', ura_key_vault_path) }}"
+
+- name: Check URA key is present
+  ansible.builtin.assert:
+    that:
+      - ura_config.key is defined and ura_config.key | trim | length > 0
+    msg: "URA key Vault variable is empty or undefined"
+
+- name: Create URA key file
+  ansible.builtin.template:
+    src: templates/uraki.j2
+    dest: /etc/uraki
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Add DPS aliases and functions to environment for user logins
   ansible.builtin.blockinfile:
     marker: "# {mark} ANSIBLE MANAGED SOURCE BLOCK"
