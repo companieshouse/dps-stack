@@ -9,6 +9,12 @@
     - cups
     - colord
 
+- name: Start atd service
+  ansible.builtin.systemd:
+    name: atd
+    state: started
+    enabled: true
+
 - name: Stop printer support services
   ansible.builtin.systemd:
     name: "{{ item }}"
