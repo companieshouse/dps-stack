@@ -114,3 +114,5 @@ postfix_config:
 
 qa_app_start_script_path: /apps/scripts/start_qa
 qa_app_stop_script_path: /apps/scripts/stop_qa
+
+ura_key_vault_path: "{{ vault_base_path }}/ura"
