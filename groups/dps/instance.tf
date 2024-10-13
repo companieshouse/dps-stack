@@ -51,6 +51,16 @@ resource "aws_security_group_rule" "ingress_dps_on_prem" {
   security_group_id = aws_security_group.common.id
 }
 
+resource "aws_security_group_rule" "ingress_alb" {
+  type                     = "ingress"
+  description              = "Allow inbound connectivity from QA web application load balancer"
+  from_port                = 8080
+  to_port                  = 8080
+  protocol                 = "TCP"
+  source_security_group_id = aws_security_group.qa_app.id
+  security_group_id        = aws_security_group.common.id
+}
+
 resource "aws_security_group_rule" "egress_all" {
   type              = "egress"
   description       = "Allow all outbound traffic"
