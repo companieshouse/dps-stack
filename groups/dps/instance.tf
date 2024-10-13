@@ -39,6 +39,18 @@ resource "aws_security_group_rule" "ingress_informix_hdr" {
   security_group_id = aws_security_group.common.id
 }
 
+resource "aws_security_group_rule" "ingress_dps_on_prem" {
+  for_each = var.informix_services
+
+  type              = "ingress"
+  description       = "Allow inbound connectivity from on-premise DPS services to ${upper(each.key)} Informix database for cloud migration"
+  from_port         = each.value
+  to_port           = each.value
+  protocol          = "TCP"
+  cidr_blocks       = ["172.24.4.0/24"]
+  security_group_id = aws_security_group.common.id
+}
+
 resource "aws_security_group_rule" "egress_all" {
   type              = "egress"
   description       = "Allow all outbound traffic"
