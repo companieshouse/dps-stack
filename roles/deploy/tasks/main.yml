@@ -20,6 +20,14 @@
       - ura_config.key is defined and ura_config.key | trim | length > 0
     msg: "URA key Vault variable is empty or undefined"
 
+- name: "Create rhosts config file"
+  ansible.builtin.template:
+    src: rhosts.j2
+    dest: "/home/{{ dps_user }}/.rhosts"
+    owner: "{{ dps_user }}"
+    group: "{{ dps_group }}"
+    mode: "600"
+
 - name: Create URA key file
   ansible.builtin.template:
     src: templates/uraki.j2
