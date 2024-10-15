@@ -41,7 +41,7 @@ informix_db_config:
           offset_in_kb: 9500000
           size_in_kb: 500000
     server_connections:
-      - server_name: dps
+      - server_name: dps_on
         connection_type: onipcshm
         host: localhost
         service_or_port: localhost
