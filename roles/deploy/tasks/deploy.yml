@@ -12,7 +12,7 @@
   ansible.builtin.shell: "source /export/home/dps/profile.dps && {{ qa_app_stop_script_path }}"
   args:
     executable: /bin/bash
-  when: qa_stop_script.stat.exists
+  when: qa_app_enabled and qa_start_script.stat.exists
   changed_when: "'Tomcat may not be running' not in stop_qa_app.stderr and stop_qa_app.rc == 0"
 
 - name: Create bulk directory structure
@@ -70,5 +70,5 @@
   ansible.builtin.shell: "source /export/home/dps/profile.dps && {{ qa_app_start_script_path }}"
   args:
     executable: /bin/bash
-  when: qa_start_script.stat.exists
+  when: qa_app_enabled
   changed_when: "'Tomcat started' in start_qa_app.stdout and start_qa_app.rc == 0"
