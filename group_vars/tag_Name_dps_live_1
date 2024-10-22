@@ -31,3 +31,5 @@ informix_management_cron_jobs:
     hour: "07"
     month: "*"
     script: "update_statistics dps"
+
+qa_app_enabled: true

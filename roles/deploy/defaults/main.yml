@@ -112,6 +112,7 @@ postfix_config:
   inet_interfaces: all
   inet_protocols: ipv4
 
+qa_app_enabled: false
 qa_app_start_script_path: /apps/scripts/start_qa
 qa_app_stop_script_path: /apps/scripts/stop_qa
 
