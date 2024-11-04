@@ -40,16 +40,13 @@ resource "aws_vpc_security_group_ingress_rule" "informix_ingress" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ingress_dps_on_prem" {
-  for_each = {
-    for rule in local.informix_hdr_security_group_rules : "${rule.service}-${rule.port}-${rule.cidr_ipv4}" => rule
-  }
+  for_each = var.informix_services
 
   security_group_id = aws_security_group.common.id
-  description       = "Allow inbound connectivity from on-premise DPS services to ${upper(each.value.service)} Informix database for cloud migration"
-  prefix_list_id    = data.aws_ec2_managed_prefix_list.shared_services_management.id
-  cidr_ipv4         = each.value.cidr_ipv4
-  from_port         = each.value.port
-  to_port           = each.value.port
+  description       = "Allow inbound connectivity from on-premise DPS services to ${upper(each.key)} Informix database for cloud migration"
+  cidr_ipv4         = "172.24.4.0/24"
+  from_port         = each.value
+  to_port           = each.value
   ip_protocol       = "tcp"
 }
 
