@@ -40,4 +40,14 @@ locals {
   logs_kms_key_id = data.vault_generic_secret.kms_keys.data["logs"]
 
   qa_app_name = "qa-${local.common_resource_name}"
+
+  informix_hdr_security_group_rules = flatten([
+    for service_name, port_number in var.informix_services : [
+      for cidr_block in data.aws_subnet.application[*].cidr_block : {
+        service   = service_name
+        port      = port_number
+        cidr_ipv4 = cidr_block
+      }
+    ]
+  ])
 }

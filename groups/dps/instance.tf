@@ -17,58 +17,54 @@ resource "aws_security_group" "common" {
   })
 }
 
-resource "aws_security_group_rule" "ingress_ci_deployments" {
-  type              = "ingress"
+resource "aws_vpc_security_group_ingress_rule" "ingress_ci_deployments" {
+  security_group_id = aws_security_group.common.id
   description       = "Allow inbound SSH connectivity for CI application deployments"
+  prefix_list_id    = data.aws_ec2_managed_prefix_list.shared_services_management.id
   from_port         = 22
   to_port           = 22
-  protocol          = "TCP"
-  prefix_list_ids   = [data.aws_ec2_managed_prefix_list.shared_services_management.id]
-  security_group_id = aws_security_group.common.id
+  ip_protocol       = "tcp"
 }
 
-resource "aws_security_group_rule" "ingress_informix_hdr" {
-  for_each = var.informix_services
+resource "aws_vpc_security_group_ingress_rule" "informix_ingress" {
+  for_each = {
+    for rule in local.informix_hdr_security_group_rules : "${rule.service}-${rule.port}-${rule.cidr_ipv4}" => rule
+  }
 
-  type              = "ingress"
-  description       = "Allow inbound connectivity from ${upper(each.key)} Informix databases to ${upper(each.key)} Informix databases for cross-instance HDR functionality"
-  from_port         = each.value
-  to_port           = each.value
-  protocol          = "TCP"
-  cidr_blocks       = data.aws_subnet.application[*].cidr_block
   security_group_id = aws_security_group.common.id
+  description       = "Allow inbound connectivity from ${upper(each.value.service)} Informix databases to ${upper(each.value.service)} Informix databases for cross-instance HDR functionality"
+  cidr_ipv4         = each.value.cidr_ipv4
+  from_port         = each.value.port
+  to_port           = each.value.port
+  ip_protocol       = "tcp"
 }
 
-resource "aws_security_group_rule" "ingress_dps_on_prem" {
+resource "aws_vpc_security_group_ingress_rule" "ingress_dps_on_prem" {
   for_each = var.informix_services
 
-  type              = "ingress"
+  security_group_id = aws_security_group.common.id
   description       = "Allow inbound connectivity from on-premise DPS services to ${upper(each.key)} Informix database for cloud migration"
+  cidr_ipv4         = "172.24.4.0/24"
   from_port         = each.value
   to_port           = each.value
-  protocol          = "TCP"
-  cidr_blocks       = ["172.24.4.0/24"]
+  ip_protocol       = "tcp"
+}
+
+resource "aws_vpc_security_group_ingress_rule" "ingress_alb" {
   security_group_id = aws_security_group.common.id
+  description       = "Allow inbound connectivity from QA web application load balancer"
+  from_port         = 8080
+  to_port           = 8080
+  ip_protocol       = "tcp"
+
+  referenced_security_group_id = aws_security_group.qa_app.id
 }
 
-resource "aws_security_group_rule" "ingress_alb" {
-  type                     = "ingress"
-  description              = "Allow inbound connectivity from QA web application load balancer"
-  from_port                = 8080
-  to_port                  = 8080
-  protocol                 = "TCP"
-  source_security_group_id = aws_security_group.qa_app.id
-  security_group_id        = aws_security_group.common.id
-}
-
-resource "aws_security_group_rule" "egress_all" {
-  type              = "egress"
+resource "aws_vpc_security_group_egress_rule" "all_egress" {
+  security_group_id = aws_security_group.common.id
   description       = "Allow all outbound traffic"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.common.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1"
 }
 
 resource "aws_instance" "dps" {
