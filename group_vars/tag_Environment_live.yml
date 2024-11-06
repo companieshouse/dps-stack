@@ -21,6 +21,8 @@ cloudwatch_agent_overrides:
 dps_printer_uri: socket://172.19.15.10
 dps_printer_model: drv:///sample.drv/generic.ppd
 
+fes_batch_qia_process_enabled: true
+
 informix_db_config:
   dps:
     server_id: "{{ informix_server_id_start + (0 * informix_server_id_increment) | int }}"
