@@ -36,6 +36,13 @@
     group: root
     mode: '0644'
 
+- name: Add fes-batch public key to authorized_key file for QIA process
+  ansible.posix.authorized_key:
+    user: "{{ dps_user }}"
+    state: present
+    key: "{{ lookup('file', '{{ role_path }}/files/fes-batch-{{ environment }}.pub') }}"
+  when: fes_batch_qia_process_enabled
+
 - name: Add DPS aliases and functions to environment for user logins
   ansible.builtin.blockinfile:
     marker: "# {mark} ANSIBLE MANAGED SOURCE BLOCK"

@@ -103,6 +103,8 @@ dps_printer_uri: cups-pdf:/
 dps_printer_model: CUPS-PDF.ppd
 dps_printer_pdf_output_dir: /var/spool/cups-pdf/${USER}
 
+fes_batch_qia_process_enabled: false
+
 postfix_config_path: /etc/postfix/main.cf
 
 postfix_config:
