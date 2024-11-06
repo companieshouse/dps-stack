@@ -50,6 +50,15 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_dps_on_prem" {
   ip_protocol       = "tcp"
 }
 
+resource "aws_vpc_security_group_ingress_rule" "ingress_ais_nfs" {
+  security_group_id = aws_security_group.common.id
+  description       = "Allow inbound connectivity from AIS systems for NFS shares"
+  cidr_ipv4         = "172.24.4.0/24"
+  from_port         = 2049
+  to_port           = 2049
+  ip_protocol       = "tcp"
+}
+
 resource "aws_vpc_security_group_ingress_rule" "ingress_alb" {
   security_group_id = aws_security_group.common.id
   description       = "Allow inbound connectivity from QA web application load balancer"
