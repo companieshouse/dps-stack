@@ -26,6 +26,17 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_ci_deployments" {
   ip_protocol       = "tcp"
 }
 
+resource "aws_vpc_security_group_ingress_rule" "ingress_chips_db_batch" {
+  for_each = toset(data.aws_subnet.application[*].cidr_block)
+
+  security_group_id = aws_security_group.common.id
+  description       = "Allow inbound SSH connectivity from chips-db-batch instances for QIA checking process"
+  cidr_ipv4         = each.key
+  from_port         = 22
+  to_port           = 22
+  ip_protocol       = "tcp"
+}
+
 resource "aws_vpc_security_group_ingress_rule" "informix_ingress" {
   for_each = {
     for rule in local.informix_hdr_security_group_rules : "${rule.service}-${rule.port}-${rule.cidr_ipv4}" => rule
