@@ -53,7 +53,7 @@
 
 - name: Remove previous QA web application files
   ansible.builtin.file:
-    paths: "{{ qa_app_deployment_dir }}"
+    path: "{{ qa_app_deployment_dir }}"
     state: absent
 
 - name: Create directory for QA web application files
