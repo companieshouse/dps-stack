@@ -50,38 +50,55 @@ bulk_home_directory_structure:
     src: /home/export/new-bulk/image/customers
   - path: /home/new-bulk/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/customers/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/customers/indexes/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/customers/cap/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/customers/scud/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/customers/288/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/customers/cnm/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/customers/liq/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/customers/mort/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/customers/287/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/customers/rec_ext/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/customers/rec_dates/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/customers/newc/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/customers/363/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/customers/acc/
     type: dir
+    mode: '0777'
   - path: /home/new-bulk/image/customers/misc/
     type: dir
+    mode: '0777'
 
 cloudwatch_agent_defaults:
   path: /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl
