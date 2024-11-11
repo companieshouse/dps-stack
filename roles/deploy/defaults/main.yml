@@ -117,5 +117,7 @@ postfix_config:
 qa_app_enabled: false
 qa_app_start_script_path: /apps/scripts/start_qa
 qa_app_stop_script_path: /apps/scripts/stop_qa
+qa_app_deployment_dir: /apps/webapp/tomcat/webapps/ch
+qa_app_war_file_path: /apps/webapp/tomcat/webapps/ch.war
 
 ura_key_vault_path: "{{ vault_base_path }}/ura"
