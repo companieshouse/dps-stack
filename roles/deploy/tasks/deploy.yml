@@ -12,7 +12,7 @@
   ansible.builtin.shell: "source /export/home/dps/profile.dps && {{ qa_app_stop_script_path }}"
   args:
     executable: /bin/bash
-  when: qa_app_enabled and qa_start_script.stat.exists
+  when: qa_app_enabled and qa_stop_script.stat.exists
   changed_when: "'Tomcat may not be running' not in stop_qa_app.stderr and stop_qa_app.rc == 0"
   ignore_errors: true
 
@@ -71,11 +71,6 @@
     owner: "{{ dps_user }}"
     group: "{{ dps_group }}"
     remote_src: true
-
-- name: Check state of QA web application start script
-  ansible.builtin.stat:
-    path: "{{ qa_app_start_script_path }}"
-  register: qa_start_script
 
 - name: Set ownership of Tomcat directory structure
   ansible.builtin.file:
