@@ -70,6 +70,7 @@
     dest: "{{ qa_app_deployment_dir }}"
     owner: "{{ dps_user }}"
     group: "{{ dps_group }}"
+    remote_src: true
 
 - name: Check state of QA web application start script
   ansible.builtin.stat:
