@@ -25,7 +25,7 @@
     state: directory
   loop: "{{ bulk_home_directory_structure | selectattr('type', '==', 'dir') | list }}"
 
-- name: Create bulk symolic links
+- name: Create bulk symbolic links
   ansible.builtin.file:
     src: "{{ item.src }}"
     dest: "{{ item.path }}"
