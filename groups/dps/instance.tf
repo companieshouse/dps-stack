@@ -72,6 +72,8 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_alb" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ingress_backend_scanning_samba" {
+  for_each = var.backend_scanning_subnets
+
   security_group_id = aws_security_group.common.id
   description       = "Allow inbound Samba connectivity for backend scanning share"
   cidr_ipv4         = "172.19.12.0/22"
@@ -81,6 +83,8 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_backend_scanning_samba" 
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ingress_backend_scanning_ssh" {
+  for_each = var.backend_scanning_subnets
+
   security_group_id = aws_security_group.common.id
   description       = "Allow inbound SSH connectivity for backend scanning systems to operate workflow process"
   cidr_ipv4         = "172.19.12.0/22"
