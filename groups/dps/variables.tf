@@ -26,6 +26,11 @@ variable "aws_account" {
   description = "The name of the AWS account; used in Vault path when looking up account identifier"
 }
 
+variable "backend_scanning_subnets" {
+  type        = list(string)
+  description = "A list of strings representing IPv4 CIDR ranges for backend scanning subnets"
+}
+
 variable "default_log_retention_in_days" {
   type        = string
   description = "The default log retention period in days for CloudWatch log groups"
