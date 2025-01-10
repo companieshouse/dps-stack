@@ -6,7 +6,7 @@ ssh_master_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCmSUYgh7lznKrZpZh
 instance_count = 2
 instance_type = "m5.large"
 
-root_volume_size = 400
+root_volume_size = 500
 
 backend_scanning_subnets = [
   "172.19.12.0/22",
