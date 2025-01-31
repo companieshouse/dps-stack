@@ -18,4 +18,5 @@
     - role: companieshouse.general.aws_cli
       vars:
         aws_cli_temp_dir: "/home/{{ ansible_user }}"
+    - role: companieshouse.general.systemd_tmpfiles
     - role: deploy
