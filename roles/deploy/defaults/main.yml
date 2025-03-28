@@ -1,5 +1,7 @@
 ---
 
+backend_scanning_shares_enabled: false
+
 bulk_home_directory_structure:
   - path: /home/bulk/
     type: dir
