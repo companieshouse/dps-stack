@@ -29,3 +29,9 @@
     name: postfix
     state: restarted
     enabled: true
+
+- name: Restart Samba service
+  ansible.builtin.systemd:
+    name: smb
+    state: restarted
+    enabled: true

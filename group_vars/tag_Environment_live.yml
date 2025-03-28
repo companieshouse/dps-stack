@@ -15,6 +15,10 @@ informix_server_port_start: 6000
 informix_server_port_local: 7000
 informix_server_alias_local: dps_local
 
+backend_scanning_shares_enabled: true
+backend_scanning_share_slave_dir: /data1/image/slave
+backend_scanning_share_master_dir: /data1/image/master
+
 cloudwatch_agent_overrides:
   metrics_enabled: true
 

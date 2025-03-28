@@ -95,6 +95,13 @@
   register: cloudwatch_logs_selinux_context
   changed_when: cloudwatch_logs_selinux_context.stdout != ""
 
+- name: Configure printing support tools
+  ansible.builtin.import_tasks: printing.yml
+
+- name: Configure Samba shares
+  ansible.builtin.import_tasks: samba.yml
+  when: backend_scanning_shares_enabled
+
 - name: Install system tooling
   ansible.builtin.import_tasks: tools.yml
 
