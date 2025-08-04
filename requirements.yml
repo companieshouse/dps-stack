@@ -10,4 +10,4 @@ collections:
   - name: companieshouse.general
     version: "1.2.3"
   - name: companieshouse.middleware
-    version: "1.2.2"
+    version: "1.2.4"
