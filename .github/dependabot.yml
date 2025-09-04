@@ -4,8 +4,6 @@ updates:
     directory: "/groups/dps"
     schedule:
       interval: "weekly"
-    reviewers:
-      - "companieshouse/platform-admin"
     registries:
       - github-dependabot
     groups:
