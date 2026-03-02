@@ -6,7 +6,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 5.37.0, < 6.30.1"
+      version = ">= 5.37.0, < 6.32.2"
     }
     cloudinit = {
       source  = "hashicorp/cloudinit"
@@ -14,7 +14,7 @@ terraform {
     }
     vault = {
       source  = "hashicorp/vault"
-      version = ">= 3.25.0, < 5.6.1"
+      version = ">= 3.25.0, < 5.7.1"
     }
   }
 }
