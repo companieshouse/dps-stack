@@ -13,3 +13,5 @@ backend_scanning_subnets = [
   "172.19.24.0/22",
   "172.19.64.0/22"
 ]
+
+default_log_retention_in_days = 90
