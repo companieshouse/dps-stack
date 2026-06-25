@@ -134,10 +134,8 @@ resource "aws_instance" "dps" {
   }
 
   tags = merge(local.common_tags, {
-    Name                      = "${var.service}-${var.environment}-${count.index + 1}"
-    ServiceTeam               = "CSI"
-    tenable-cwp-scan-disabled = "true"
-    Repository                = "dps-stack"
+    Name = "${var.service}-${var.environment}-${count.index + 1}"
+    ServiceTeam = "CSI"
   })
   volume_tags = local.common_tags
 }
